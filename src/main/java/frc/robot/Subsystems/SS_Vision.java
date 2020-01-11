@@ -7,7 +7,7 @@
 
 //Code from limelight example: http://docs.limelightvision.io/en/latest/getting_started.html#basic-programming
 
-package frc.robot.Subsystems;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.NetworkTable;

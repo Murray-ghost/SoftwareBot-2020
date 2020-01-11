@@ -8,7 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import frc.robot.Subsystems.SS_Vision;
+import frc.robot.subsystems.SS_Vision;
 
 /**
  * The VM is configured to automatically run this class, and to call the
