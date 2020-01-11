@@ -8,6 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.C_ShieldGeneratorTracking;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -16,16 +18,19 @@ import edu.wpi.first.wpilibj.TimedRobot;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
+
+
 public class Robot extends TimedRobot {
   
-
+  C_ShieldGeneratorTracking ShieldGeneratorTracking;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
-    
+    ShieldGeneratorTracking = new C_ShieldGeneratorTracking();
+    ShieldGeneratorTracking.execute();
   }
 
   /**
@@ -69,6 +74,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    
+    
   }
 
   /**

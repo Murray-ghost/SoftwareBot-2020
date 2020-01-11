@@ -8,6 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.SS_Vision;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.lang.Math;
 
 public class C_ShieldGeneratorTracking extends CommandBase {
@@ -23,9 +25,12 @@ double ch = 0; // camera hight
 double th = 0; // target hight
 double angleOftarget = 0;
 double angleofcamera = 0;
+SS_Vision vision;
 
   public C_ShieldGeneratorTracking() {
     // Use addRequirements() here to declare subsystem dependencies.
+    SS_Vision vision = new SS_Vision();
+    
   }
 
   // Called when the command is initially scheduled.
@@ -37,6 +42,9 @@ double angleofcamera = 0;
   @Override
   public void execute() {
 
+    double distance = EstimateDistance(vision.getY());
+    SmartDashboard.putNumber("Distacnec: ", distance);
+    vision.updateTelemetry();
   }
 
   // Called once the command ends or is interrupted.
@@ -65,9 +73,9 @@ double angleofcamera = 0;
     return distanceAdjust + steeringAdjaus;
   }
 
-  public double EstimateDistance(){
+  public double EstimateDistance(double tx){
     double distance = 0;
-
+    angleOftarget = tx;
     distance = (th - ch) / Math.tan((angleofcamera+angleOftarget)*Math.PI/180.0);
 
     return distance;
