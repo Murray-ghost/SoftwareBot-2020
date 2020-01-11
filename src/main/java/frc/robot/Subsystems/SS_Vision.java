@@ -39,7 +39,12 @@ public class SS_Vision extends SubsystemBase {
   private NetworkTableEntry tv; //Whether the limelight has any valid targets (0 or 1)
   private NetworkTableEntry ta; //Target Area (0% of image to 100% of image)
   
-  public SS_Vision() {
+  public SS_Vision() { 
+    visionTable = NetworkTableInstance.getDefault().getTable("limelight");
+    tx = visionTable.getEntry("tx");
+    ty = visionTable.getEntry("ty");
+    tv = visionTable.getEntry("tv");
+    ta = visionTable.getEntry("ta");
     setMode(CAMERA_DEFAULT_MODE, LED_DEFAULT_MODE, DEFAULT_PIPELINE);
   }
 
@@ -47,12 +52,6 @@ public class SS_Vision extends SubsystemBase {
   public void periodic() {}
 
   public void updateTelemetry() {
-
-    visionTable = NetworkTableInstance.getDefault().getTable("limelight");
-    tx = visionTable.getEntry("tx");
-    ty = visionTable.getEntry("ty");
-    tv = visionTable.getEntry("tv");
-    ta = visionTable.getEntry("ta");
 
     //read values periodically
     final double x = tx.getDouble(0.0);
@@ -80,12 +79,10 @@ public class SS_Vision extends SubsystemBase {
   }
 
   public double getX() {
-    tx = visionTable.getEntry("tx");
     return tx.getDouble(0.0);
   }
 
   public double getY() {
-    ty = visionTable.getEntry("ty");
     return tx.getDouble(0.0);
   }
 }
