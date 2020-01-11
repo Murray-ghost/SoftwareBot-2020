@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.Subsystems.SS_Vision;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public class Robot extends TimedRobot {
   
-
+  SS_Vision ssVision = new SS_Vision();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    ssVision.updateTelemetry();
   }
 
   /**
