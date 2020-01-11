@@ -53,13 +53,13 @@ public class SS_Vision extends SubsystemBase {
 
   public void updateTelemetry() {
 
-    //read values periodically
+    //read values
     final double x = tx.getDouble(0.0);
     final double y = ty.getDouble(0.0);
     final double area = ta.getDouble(0.0);
     final boolean target = tv.getDouble(0) == 1;
 
-    //post to smart dashboard periodically
+    //post to smart dashboard
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
