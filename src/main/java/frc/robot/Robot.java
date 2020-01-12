@@ -7,7 +7,13 @@
 
 package frc.robot;
 
+import java.util.Map;
+
+import edu.wpi.cscore.HttpCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.subsystems.SS_Vision;
 
 /**
@@ -18,15 +24,19 @@ import frc.robot.subsystems.SS_Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-  
-  SS_Vision ssVision = new SS_Vision();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
+  SS_Vision ssVision = new SS_Vision();
+  // private ShuffleboardTab driver;
+
   @Override
   public void robotInit() {
-    
+    // driver = Shuffleboard.getTab("driver");
+
+    //HttpCamera limelightCamera = new HttpCamera("limelight", "http://10.36.63.78:5800" );
+    // driver.add(limelightCamera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Show controls", false)); 
   }
 
   /**
