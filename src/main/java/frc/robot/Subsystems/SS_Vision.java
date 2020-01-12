@@ -44,7 +44,7 @@ public class SS_Vision extends SubsystemBase {
   private boolean initialized = false;
   
   public SS_Vision() {
-    visionTable = NetworkTableInstance.getDefault().getTable("limelight");
+    visionTable = NetworkTableInstance.getDefault().getTable("limelight-testing");
     tx = visionTable.getEntry("tx");
     ty = visionTable.getEntry("ty");
     tv = visionTable.getEntry("tv");
@@ -57,7 +57,7 @@ public class SS_Vision extends SubsystemBase {
 
   public void updateTelemetry() {
 
-    //read values
+    //read values 
     final double x = tx.getDouble(-1);
     final double y = ty.getDouble(-1);
     final double area = ta.getDouble(-1);
