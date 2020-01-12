@@ -21,7 +21,7 @@ public class SS_Vision extends SubsystemBase {
   public static final int LED_OFF = 1; //force off
   public static final int LED_BLINK = 2;	//force blink
   public static final int LED_ON = 3; //force on
-  public static final int LED_DEFAULT_MODE = LED_BLINK;
+  public static final int LED_DEFAULT_MODE = LED_ON;
 
   //camera mode constants
   public static final int CAMERA_VISION = 0;	//Vision processor
@@ -38,10 +38,6 @@ public class SS_Vision extends SubsystemBase {
   private NetworkTableEntry ty; //Vertical Offset From Crosshair To Target (-20.5 degrees to 20.5 degrees)
   private NetworkTableEntry tv; //Whether the limelight has any valid targets (0 or 1)
   private NetworkTableEntry ta; //Target Area (0% of image to 100% of image)
-
-  private int counter = 0;
-
-  private boolean initialized = false;
   
   public SS_Vision() {
     visionTable = NetworkTableInstance.getDefault().getTable("limelight-testing");
@@ -68,26 +64,18 @@ public class SS_Vision extends SubsystemBase {
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
     SmartDashboard.putBoolean("Valid Target", target);
-
-    counter++;
-    SmartDashboard.putNumber("counter", counter);
-
-    SmartDashboard.putBoolean("initialized", initialized);
-    visionTable.getEntry("ledMode").setNumber(3);
-
   }
 
   public void setMode(int cameraMode, int ledMode, int pipeline) {  
-    //if(cameraMode > -1 && cameraMode < 2) {
+    if(cameraMode > -1 && cameraMode < 2) {
       visionTable.getEntry("camMode").setNumber(cameraMode);
-    //}
-    //if(ledMode > -1 && ledMode < 4) {
+    }
+    if(ledMode > -1 && ledMode < 4) {
       visionTable.getEntry("ledMode").setNumber(ledMode);
-      initialized = true;
-    //}
-    //if(pipeline > -1 && pipeline < 10) {
+    }
+    if(pipeline > -1 && pipeline < 10) {
       visionTable.getEntry("pipeline").setNumber(pipeline);
-    //}
+    }
   }
 
   public double getX() {
