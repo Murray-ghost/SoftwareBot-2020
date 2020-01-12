@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SS_Vision;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import java.lang.Math;
 
 public class C_ShieldGeneratorTracking extends CommandBase {
@@ -17,19 +18,29 @@ public class C_ShieldGeneratorTracking extends CommandBase {
    * Creates a new ShieldGeneratorTracking.
    */
 
-float KpAim = -0.1f;
-float KpDistance = -0.1f;
-float minAimCommand = 0.05f;
-float steeringAdjaus = 0.0f;
 double ch = 0; // camera hight
 double th = 0; // target hight
 double angleOftarget = 0;
-double angleofcamera = 0;
+double angleOfcamera = 0;
+double minimumTrackingDistance;
+double maximumTrackingDistance;
+double minimumVewingAngle;
+double maximumVewingAngle;
+double curentRotation = 0;
+
 SS_Vision vision;
 
-  public C_ShieldGeneratorTracking() {
+  public C_ShieldGeneratorTracking( double ch, double th, double angleOfcamera, double minimumTrackingDistance,double maximumTrackingDistance,double minimumVewingAngle,double maximumVewingAngle) {
     // Use addRequirements() here to declare subsystem dependencies.
-    SS_Vision vision = new SS_Vision();
+    vision = new SS_Vision();
+    
+    this.ch = ch;
+    this.th = th;
+    this.angleOfcamera = angleOfcamera;
+    this.minimumTrackingDistance = minimumTrackingDistance;
+    this.maximumTrackingDistance = maximumTrackingDistance;
+    this.minimumVewingAngle = minimumVewingAngle;
+    this.maximumVewingAngle = maximumVewingAngle;
     
   }
 
@@ -42,14 +53,14 @@ SS_Vision vision;
   @Override
   public void execute() {
 
-    double distance = EstimateDistance(vision.getY());
+    final double distance = EstimateDistance();
     SmartDashboard.putNumber("Distacnec: ", distance);
     vision.updateTelemetry();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(final boolean interrupted) {
   }
 
   // Returns true when the command should end.
@@ -57,28 +68,52 @@ SS_Vision vision;
   public boolean isFinished() {
     return false;
   }
+  //looks at the target and gets the angle
+  public double LookAtTargetAngle(){
 
-  public float GetXPos(float tx, float ty){
-    float headingError = -tx;
-    float distanceError = -ty;
-    float steeringAdjaus = this.steeringAdjaus;
 
-    if (tx > 1.0){
-      steeringAdjaus = KpAim*headingError - minAimCommand;
-    }else if (tx < 1.0){
-      steeringAdjaus = KpAim*headingError + minAimCommand;
-    }
-    float distanceAdjust = KpDistance * distanceError;
+    double angle = 0;
+    double fealedAngle = 0; // this would bee replaced with the Fialed oreatation when we get the gyro subsystem working
+    angle = Math.abs(fealedAngle - curentRotation);
 
-    return distanceAdjust + steeringAdjaus;
+
+    return angle;
   }
 
-  public double EstimateDistance(double tx){
-    double distance = 0;
-    angleOftarget = tx;
-    distance = (th - ch) / Math.tan((angleofcamera+angleOftarget)*Math.PI/180.0);
 
-    return distance;
+  //gets the Estimated Distance between your target and the camera
+  public double EstimateDistance(){
+    if(!IsOutOfRangeDistance()){
+      double distance = 0;
+      angleOftarget = vision.getY();
+      distance = (th - ch) / Math.tan((angleOfcamera + angleOftarget) * Math.PI/180.0);
+  
+      return distance;
+    }
+    else {
+      return 0;
+    }
+
     
+  }
+  public boolean IsOutOfRangeDistance(){
+
+    if(EstimateDistance() > maximumTrackingDistance || EstimateDistance() < minimumTrackingDistance){
+      SmartDashboard.getBoolean("Is in range", true);
+      return true;
+    }else{
+      SmartDashboard.getBoolean("Is in range", false);
+      return false;
+    }
+
+    
+  }
+
+  public boolean IsOutOfRangeRotation(){
+    if(curentRotation > maximumVewingAngle || curentRotation < minimumVewingAngle){
+      return true;
+    }
+
+    return false;
   }
 }

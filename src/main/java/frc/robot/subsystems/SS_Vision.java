@@ -9,11 +9,11 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SS_Vision extends SubsystemBase {
   //led mode constants
@@ -40,6 +40,11 @@ public class SS_Vision extends SubsystemBase {
   private NetworkTableEntry ta; //Target Area (0% of image to 100% of image)
   
   public SS_Vision() {
+    visionTable = NetworkTableInstance.getDefault().getTable("limelight-testing");
+    tx = visionTable.getEntry("tx");
+    ty = visionTable.getEntry("ty");
+    tv = visionTable.getEntry("tv");
+    ta = visionTable.getEntry("ta");
     setMode(CAMERA_DEFAULT_MODE, LED_DEFAULT_MODE, DEFAULT_PIPELINE);
   }
 
@@ -48,19 +53,13 @@ public class SS_Vision extends SubsystemBase {
 
   public void updateTelemetry() {
 
-    visionTable = NetworkTableInstance.getDefault().getTable("limelight");
-    tx = visionTable.getEntry("tx");
-    ty = visionTable.getEntry("ty");
-    tv = visionTable.getEntry("tv");
-    ta = visionTable.getEntry("ta");
+    //read values 
+    final double x = tx.getDouble(-1);
+    final double y = ty.getDouble(-1);
+    final double area = ta.getDouble(-1);
+    final boolean target = tv.getDouble(-1) == 1;
 
-    //read values periodically
-    final double x = tx.getDouble(0.0);
-    final double y = ty.getDouble(0.0);
-    final double area = ta.getDouble(0.0);
-    final boolean target = tv.getDouble(0) == 1;
-
-    //post to smart dashboard periodically
+    //post to smart dashboard
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
@@ -68,10 +67,10 @@ public class SS_Vision extends SubsystemBase {
   }
 
   public void setMode(int cameraMode, int ledMode, int pipeline) {  
-    if(cameraMode > -1 && cameraMode < 4) {
+    if(cameraMode > -1 && cameraMode < 2) {
       visionTable.getEntry("camMode").setNumber(cameraMode);
     }
-    if(ledMode > -1 && ledMode < 2) {
+    if(ledMode > -1 && ledMode < 4) {
       visionTable.getEntry("ledMode").setNumber(ledMode);
     }
     if(pipeline > -1 && pipeline < 10) {
@@ -80,12 +79,10 @@ public class SS_Vision extends SubsystemBase {
   }
 
   public double getX() {
-    tx = visionTable.getEntry("tx");
     return tx.getDouble(0.0);
   }
 
   public double getY() {
-    ty = visionTable.getEntry("ty");
-    return tx.getDouble(0.0);
+    return ty.getDouble(0.0);
   }
 }
