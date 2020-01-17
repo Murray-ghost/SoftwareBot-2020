@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    ShieldGeneratorTracking = new C_ShieldGeneratorTracking(2,7,45,2,25,180,0);
+    ShieldGeneratorTracking = new C_ShieldGeneratorTracking(4,5,0,2,25,180,0);
     ShieldGeneratorTracking.execute();
   }
 
