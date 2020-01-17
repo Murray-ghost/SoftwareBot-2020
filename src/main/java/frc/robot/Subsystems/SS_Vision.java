@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SS_Vision extends SubsystemBase {
+
   //led mode constants
   public static final int LED_PIPELINE = 0;	//use the LED Mode set in the current pipeline
   public static final int LED_OFF = 1; //force off
@@ -40,6 +41,7 @@ public class SS_Vision extends SubsystemBase {
   private NetworkTableEntry ta; //Target Area (0% of image to 100% of image)
   
   public SS_Vision() {
+
     visionTable = NetworkTableInstance.getDefault().getTable("limelight-testing");
     tx = visionTable.getEntry("tx");
     ty = visionTable.getEntry("ty");
@@ -66,7 +68,8 @@ public class SS_Vision extends SubsystemBase {
     SmartDashboard.putBoolean("Valid Target", target);
   }
 
-  public void setMode(int cameraMode, int ledMode, int pipeline) {  
+  public void setMode(int cameraMode, int ledMode, int pipeline) { 
+
     if(cameraMode > -1 && cameraMode < 2) {
       visionTable.getEntry("camMode").setNumber(cameraMode);
     }
@@ -78,11 +81,11 @@ public class SS_Vision extends SubsystemBase {
     }
   }
 
-  public double getX() {
+  public double getXOffset() {
     return tx.getDouble(0.0);
   }
 
-  public double getY() {
+  public double getYOffset() {
     return ty.getDouble(0.0);
   }
 }
