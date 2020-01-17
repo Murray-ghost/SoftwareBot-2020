@@ -18,20 +18,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class SS_Vision extends SubsystemBase {
 
   //led mode constants
-  public static final int LED_PIPELINE = 0;	//use the LED Mode set in the current pipeline
+  public static final int LED_PIPELINE = 0; //use the LED Mode set in the current pipeline
   public static final int LED_OFF = 1; //force off
-  public static final int LED_BLINK = 2;	//force blink
+  public static final int LED_BLINK = 2; //force blink
   public static final int LED_ON = 3; //force on
   public static final int LED_DEFAULT_MODE = LED_ON;
 
   //camera mode constants
-  public static final int CAMERA_VISION = 0;	//Vision processor
+  public static final int CAMERA_VISION = 0; //Vision processor
   public static final int CAMERA_DRIVE = 1; //Driver Camera (Increases exposure, disables vision processing)
   public static final int CAMERA_DEFAULT_MODE = CAMERA_VISION;
 
   //piplines (can be a numbers from 0-9)
   public static final int TRACKING_PIPELINE = 0;
   public static final int DEFAULT_PIPELINE = TRACKING_PIPELINE;
+
+  //Distance constants
+  public static final double CAMERA_ANGLE = 45;
+  public static final double CAMERA_HEIGHT = 24; //in inches
+  public static final double TARGET_HEIGHT = 200; //in inches
 
   //vision network table
   private NetworkTable visionTable;
@@ -81,11 +86,22 @@ public class SS_Vision extends SubsystemBase {
     }
   }
 
+  //returns horizontal offset from Crosshair to target (-27 degrees to 27 degrees)
   public double getXOffset() {
     return tx.getDouble(0.0);
   }
 
+  //vertical offset from crosshair to target (-20.5 degrees to 20.5 degrees)
   public double getYOffset() {
     return ty.getDouble(0.0);
+  }
+
+  //get an estimated distance to the target
+  public double getDistance() {
+
+      double distance = 0;
+      double angleOftarget = getYOffset();
+      distance = (TARGET_HEIGHT - CAMERA_HEIGHT) / Math.tan((CAMERA_ANGLE + angleOftarget) * Math.PI/180.0);
+      return distance;
   }
 }
