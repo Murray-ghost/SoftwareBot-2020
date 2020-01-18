@@ -38,8 +38,16 @@ public class SS_Vision extends SubsystemBase {
   private NetworkTableEntry ty; //Vertical Offset From Crosshair To Target (-20.5 degrees to 20.5 degrees)
   private NetworkTableEntry tv; //Whether the limelight has any valid targets (0 or 1)
   private NetworkTableEntry ta; //Target Area (0% of image to 100% of image)
+
+  private double CameraHight;
+  private double CameraAngleFromeGround;
+  private double TargetCenterHigth;
   
-  public SS_Vision() {
+  public SS_Vision(double CameraHight,double CameraAngleFromeGround, double TargetCenterHigth) {
+    this.CameraHight = CameraHight;
+    this.CameraAngleFromeGround = CameraAngleFromeGround;
+    this.TargetCenterHigth = TargetCenterHigth;
+    
     visionTable = NetworkTableInstance.getDefault().getTable("limelight-testing");
     tx = visionTable.getEntry("tx");
     ty = visionTable.getEntry("ty");
@@ -86,10 +94,10 @@ public class SS_Vision extends SubsystemBase {
     return ty.getDouble(0.0);
   }
 
-  public double GetTargetDistance(double CamerHight,double CamerAngleFromeGround, double TargetCenterHigth){
+  public double GetTargetDistance(){
 
     double distance = 0;
-    distance = (TargetCenterHigth - CamerHight) / Math.tan(CamerAngleFromeGround + getY() * Math.PI/180.0);
+    distance = (TargetCenterHigth - CameraHight) / Math.tan(CameraAngleFromeGround + getY() * Math.PI/180.0);
     
     return distance;
     

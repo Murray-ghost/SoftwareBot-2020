@@ -27,12 +27,13 @@ double maximumTrackingDistance;
 double minimumVewingAngle;
 double maximumVewingAngle;
 double curentRotation = 0;
+private final double MAX_TARGET_RANGE = 200;
 
 SS_Vision vision;
 
   public C_ShieldGeneratorTracking( double ch, double th, double angleOfcamera, double minimumTrackingDistance,double maximumTrackingDistance,double minimumVewingAngle,double maximumVewingAngle) {
     // Use addRequirements() here to declare subsystem dependencies.
-    vision = new SS_Vision();
+    vision = new SS_Vision(26.5f, 0, 59f);
     
 
 
@@ -55,7 +56,8 @@ SS_Vision vision;
   @Override
   public void execute() {
 
-    final double distance = vision.GetTargetDistance(26.5f, 0, 58.5f);
+    final double distance = vision.GetTargetDistance();
+    SmartDashboard.putBoolean("Is in Range:", IsOutOfRangeDistance());
     SmartDashboard.putNumber("Camera ty:", vision.getY());
     SmartDashboard.putNumber("Distacnec: ", distance);
     vision.updateTelemetry();
@@ -83,28 +85,12 @@ SS_Vision vision;
     return angle;
   }
 
-
-  //gets the Estimated Distance between your target and the camera
-  public double EstimateDistance(){
-    
-      double distance = 0;
-      angleOftarget = vision.getY();
-      distance = (th - ch) / Math.tan((angleOfcamera + angleOftarget) * Math.PI/180.0);
-  
-      return distance;
-
-    
-  }
   public boolean IsOutOfRangeDistance(){
-
-    if(EstimateDistance() > maximumTrackingDistance || EstimateDistance() < minimumTrackingDistance){
-      SmartDashboard.getBoolean("Is in range", true);
+    if(MAX_TARGET_RANGE > vision.GetTargetDistance()){
       return true;
     }else{
-      SmartDashboard.getBoolean("Is in range", false);
       return false;
     }
-
     
   }
 
