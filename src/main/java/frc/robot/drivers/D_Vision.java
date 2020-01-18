@@ -7,15 +7,14 @@
 
 //Code from limelight example: http://docs.limelightvision.io/en/latest/getting_started.html#basic-programming
 
-package frc.robot.subsystems;
+package frc.robot.drivers;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class SS_Vision extends SubsystemBase {
+public class D_Vision {
 
   //led mode constants
   public static final int LED_PIPELINE = 0; //use the LED Mode set in the current pipeline
@@ -47,7 +46,7 @@ public class SS_Vision extends SubsystemBase {
   private NetworkTableEntry ta; //Target Area (0% of image to 100% of image)
   private NetworkTableEntry ts; //Skew or rotation (-90 degrees to 0 degrees)
   
-  public SS_Vision() {
+  public D_Vision() {
 
     visionTable = NetworkTableInstance.getDefault().getTable("limelight-testing");
     tx = visionTable.getEntry("tx");
@@ -57,9 +56,6 @@ public class SS_Vision extends SubsystemBase {
     ts = visionTable.getEntry("ts");
     setMode(CAMERA_DEFAULT_MODE, LED_DEFAULT_MODE, DEFAULT_PIPELINE);
   }
-
-  @Override
-  public void periodic() {}
 
   public void updateTelemetry() {
 

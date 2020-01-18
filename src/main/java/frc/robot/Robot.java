@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import frc.robot.subsystems.SS_Vision;
+import frc.robot.drivers.D_Vision;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
-  SS_Vision ssVision = new SS_Vision();
+  D_Vision dVision = new D_Vision();
   // private ShuffleboardTab driver;
 
   @Override
@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    ssVision.updateTelemetry();
+    dVision.updateTelemetry();
   }
 
   /**
@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    ssVision.setPipeline(SS_Vision.FINE_PIPELINE);
+    dVision.setPipeline(dVision.FINE_PIPELINE);
     
   }
 
@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    ssVision.setPipeline(SS_Vision.COARSE_PIPELINE);
+    dVision.setPipeline(dVision.COARSE_PIPELINE);
   }
 
   /**
