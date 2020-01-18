@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SS_Vision;
+import frc.robot.util.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.lang.Math;
@@ -30,10 +31,12 @@ double curentRotation = 0;
 private final double MAX_TARGET_RANGE = 200;
 
 SS_Vision vision;
+PIDController pid;
 
   public C_ShieldGeneratorTracking( double ch, double th, double angleOfcamera, double minimumTrackingDistance,double maximumTrackingDistance,double minimumVewingAngle,double maximumVewingAngle) {
     // Use addRequirements() here to declare subsystem dependencies.
     vision = new SS_Vision(26.5f, 0, 59f);   
+    pid = new PIDController(0.5,0,0,0);
     
 
 
@@ -73,18 +76,8 @@ SS_Vision vision;
   public boolean isFinished() {
     return false;
   }
-  //looks at the target and gets the angle
-  public double LookAtTargetAngle(){
-
-
-    double angle = 0;
-    double fealedAngle = 0; // this would bee replaced with the Fialed oreatation when we get the gyro subsystem working
-    angle = Math.abs(fealedAngle - curentRotation);
-
-
-    return angle;
-  }
-
+  
+  // This is a bool that sees if you are out of range of the target
   public boolean IsOutOfRangeDistance(){
     if(MAX_TARGET_RANGE > vision.GetTargetDistance()){
       return true;
@@ -94,11 +87,5 @@ SS_Vision vision;
     
   }
 
-  public boolean IsOutOfRangeRotation(){
-    if(curentRotation > maximumVewingAngle || curentRotation < minimumVewingAngle){
-      return true;
-    }
 
-    return false;
-  }
 }
