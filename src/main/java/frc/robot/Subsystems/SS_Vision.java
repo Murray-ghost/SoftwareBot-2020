@@ -44,6 +44,7 @@ public class SS_Vision extends SubsystemBase {
   private NetworkTableEntry ty; //Vertical Offset From Crosshair To Target (-20.5 degrees to 20.5 degrees)
   private NetworkTableEntry tv; //Whether the limelight has any valid targets (0 or 1)
   private NetworkTableEntry ta; //Target Area (0% of image to 100% of image)
+  private NetworkTableEntry ts; //Skew or rotation (-90 degrees to 0 degrees)
   
   public SS_Vision() {
 
@@ -52,6 +53,7 @@ public class SS_Vision extends SubsystemBase {
     ty = visionTable.getEntry("ty");
     tv = visionTable.getEntry("tv");
     ta = visionTable.getEntry("ta");
+    ts = visionTable.getEntry("ts");
     setMode(CAMERA_DEFAULT_MODE, LED_DEFAULT_MODE, DEFAULT_PIPELINE);
   }
 
@@ -65,12 +67,14 @@ public class SS_Vision extends SubsystemBase {
     final double y = ty.getDouble(-1);
     final double area = ta.getDouble(-1);
     final boolean target = tv.getDouble(-1) == 1;
+    final double skew = ts.getDouble(-1);
 
     //post to smart dashboard
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
     SmartDashboard.putBoolean("Valid Target", target);
+    SmartDashboard.putNumber("Skew", skew);
   }
 
   public void setMode(int cameraMode, int ledMode, int pipeline) { 
@@ -88,12 +92,18 @@ public class SS_Vision extends SubsystemBase {
 
   //returns horizontal offset from Crosshair to target (-27 degrees to 27 degrees)
   public double getXOffset() {
-    return tx.getDouble(0.0);
+    return tx.getDouble(-1);
   }
 
   //vertical offset from crosshair to target (-20.5 degrees to 20.5 degrees)
   public double getYOffset() {
-    return ty.getDouble(0.0);
+    return ty.getDouble(-1);
+  }
+
+  //returns the rotation (-90 degrees to 0 degrees)
+  public double getSkew()//{
+  {
+    return ts.getDouble(-1);
   }
 
   //get an estimated distance to the target
