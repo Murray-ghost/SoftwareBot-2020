@@ -33,7 +33,7 @@ SS_Vision vision;
 
   public C_ShieldGeneratorTracking( double ch, double th, double angleOfcamera, double minimumTrackingDistance,double maximumTrackingDistance,double minimumVewingAngle,double maximumVewingAngle) {
     // Use addRequirements() here to declare subsystem dependencies.
-    vision = new SS_Vision(26.5f, 0, 59f);
+    vision = new SS_Vision(26.5f, 0, 59f);   
     
 
 
