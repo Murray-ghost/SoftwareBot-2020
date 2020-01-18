@@ -87,5 +87,9 @@ PIDController pid;
     
   }
 
+  public double GetHoodPos(double distance){
+    return 0;
+  }
+
 
 }
