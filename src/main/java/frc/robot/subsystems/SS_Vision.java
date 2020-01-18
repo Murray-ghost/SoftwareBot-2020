@@ -85,4 +85,13 @@ public class SS_Vision extends SubsystemBase {
   public double getY() {
     return ty.getDouble(0.0);
   }
+
+  public double GetTargetDistance(double CamerHight,double CamerAngleFromeGround, double TargetCenterHigth){
+
+    double distance = 0;
+    distance = (TargetCenterHigth - CamerHight) / Math.tan(CamerAngleFromeGround + getY() * Math.PI/180.0);
+    
+    return distance;
+    
+  }
 }

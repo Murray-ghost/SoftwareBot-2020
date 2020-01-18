@@ -34,6 +34,8 @@ SS_Vision vision;
     // Use addRequirements() here to declare subsystem dependencies.
     vision = new SS_Vision();
     
+
+
     this.ch = ch;
     this.th = th;
     this.angleOfcamera = angleOfcamera;
@@ -53,7 +55,8 @@ SS_Vision vision;
   @Override
   public void execute() {
 
-    final double distance = EstimateDistance();
+    final double distance = vision.GetTargetDistance(26.5f, 0, 58.5f);
+    SmartDashboard.putNumber("Camera ty:", vision.getY());
     SmartDashboard.putNumber("Distacnec: ", distance);
     vision.updateTelemetry();
   }
@@ -83,16 +86,12 @@ SS_Vision vision;
 
   //gets the Estimated Distance between your target and the camera
   public double EstimateDistance(){
-    if(!IsOutOfRangeDistance()){
+    
       double distance = 0;
       angleOftarget = vision.getY();
       distance = (th - ch) / Math.tan((angleOfcamera + angleOftarget) * Math.PI/180.0);
   
       return distance;
-    }
-    else {
-      return 0;
-    }
 
     
   }
