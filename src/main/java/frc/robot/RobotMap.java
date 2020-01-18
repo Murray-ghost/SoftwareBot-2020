@@ -7,7 +7,11 @@
 
 package frc.robot;
 
-public class RobotMap 
-{
-    
+/**
+ * Add your docs here.
+ */
+public class RobotMap {
+    public static final int SHOOTER_MOTOR = 12;
+    public static final int AMMO_CLIP_MOTOR = 5;
+    public static final int HATCH_SOLENOID = 1;
 }

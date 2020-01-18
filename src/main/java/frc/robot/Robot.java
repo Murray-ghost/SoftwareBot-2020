@@ -8,6 +8,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.subsystems.SS_AmmoClip;
+import frc.robot.subsystems.SS_Hatch;
+import frc.robot.subsystems.SS_Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,16 +21,29 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public class Robot extends TimedRobot {
   
-
+  private static SS_Shooter ss_shooter;
+  private static SS_AmmoClip ss_clip;
+  private static SS_Hatch ss_hatch;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
-    
+    ss_shooter = new SS_Shooter();
+    ss_clip = new SS_AmmoClip();
+    ss_hatch = new SS_Hatch();
   }
 
+  public static SS_Shooter getShooter(){
+    return ss_shooter;
+  }
+  public static SS_AmmoClip getAmmoClip(){
+    return ss_clip;
+  }
+  public static SS_Hatch getHatch(){
+    return ss_hatch;
+  }
   /**
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
