@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    ssVision.setPipeline(SS_Vision.FINE_PIPELINE);
     
   }
 
@@ -74,6 +75,11 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     
+  }
+
+  @Override
+  public void teleopInit() {
+    ssVision.setPipeline(SS_Vision.COARSE_PIPELINE);
   }
 
   /**

@@ -30,8 +30,9 @@ public class SS_Vision extends SubsystemBase {
   public static final int CAMERA_DEFAULT_MODE = CAMERA_VISION;
 
   //piplines (can be a numbers from 0-9)
-  public static final int TRACKING_PIPELINE = 0;
-  public static final int DEFAULT_PIPELINE = TRACKING_PIPELINE;
+  public static final int COARSE_PIPELINE = 0;
+  public static final int FINE_PIPELINE = 1;
+  public static final int DEFAULT_PIPELINE = COARSE_PIPELINE;
 
   //Distance constants
   public static final double CAMERA_ANGLE = 45;
@@ -90,6 +91,21 @@ public class SS_Vision extends SubsystemBase {
     }
   }
 
+  //sets the pipeline mode
+  public void setPipeline(int pipeline) {
+    setMode(-1, -1, pipeline);
+  }
+
+  //sets the LED mode
+  public void setLEDMode(int ledMode) {
+    setMode(-1, ledMode, -1);
+  }
+
+  //sets the camera mode
+  public void setCameraMode(int cameraMode) {
+    setMode(cameraMode, -1, -1);
+  }
+
   //returns horizontal offset from Crosshair to target (-27 degrees to 27 degrees)
   public double getXOffset() {
     return tx.getDouble(-1);
@@ -101,8 +117,7 @@ public class SS_Vision extends SubsystemBase {
   }
 
   //returns the rotation (-90 degrees to 0 degrees)
-  public double getSkew()//{
-  {
+  public double getSkew() {
     return ts.getDouble(-1);
   }
 
