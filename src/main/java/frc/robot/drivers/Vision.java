@@ -14,7 +14,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class D_Vision {
+public class Vision {
 
   //led mode constants
   public static final int LED_PIPELINE = 0; //use the LED Mode set in the current pipeline
@@ -46,7 +46,7 @@ public class D_Vision {
   private NetworkTableEntry ta; //Target Area (0% of image to 100% of image)
   private NetworkTableEntry ts; //Skew or rotation (-90 degrees to 0 degrees)
   
-  public D_Vision() {
+  public Vision() {
 
     visionTable = NetworkTableInstance.getDefault().getTable("limelight-testing");
     tx = visionTable.getEntry("tx");
@@ -124,5 +124,10 @@ public class D_Vision {
       double angleOftarget = getYOffset();
       distance = (TARGET_HEIGHT - CAMERA_HEIGHT) / Math.tan((CAMERA_ANGLE + angleOftarget) * Math.PI/180.0);
       return distance;
+  }
+
+  public double getRotation() {
+
+  return 1;
   }
 }
