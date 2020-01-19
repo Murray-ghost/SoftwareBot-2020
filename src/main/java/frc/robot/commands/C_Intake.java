@@ -10,13 +10,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class C_SpinShooter extends CommandBase {
+public class C_Intake extends CommandBase {
   /**
-   * Creates a new C_Shooter.
+   * Creates a new C_Intake.
    */
-  public C_SpinShooter() {
+  private double speed;
+  public C_Intake(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.getShooter());
+    addRequirements(Robot.getIntake());
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -27,16 +29,13 @@ public class C_SpinShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = 0;
-    Robot.getShooter().setSpeed(speed);
+    Robot.getIntake().setSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(isFinished()){
-      Robot.getShooter().setSpeed(0);
-    } 
+    Robot.getIntake().setSpeed(0);
   }
 
   // Returns true when the command should end.

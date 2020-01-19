@@ -14,9 +14,11 @@ public class C_LoadBall extends CommandBase {
   /**
    * Creates a new C_LoadBall.
    */
-  public C_LoadBall() {
+  public double speed;
+  public C_LoadBall(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.getAmmoClip());
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -27,12 +29,13 @@ public class C_LoadBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.getAmmoClip().setSpeed(0.2);
+    Robot.getAmmoClip().setSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Robot.getAmmoClip().setSpeed(0);
   }
 
   // Returns true when the command should end.

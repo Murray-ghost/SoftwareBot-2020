@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.SS_AmmoClip;
 import frc.robot.subsystems.SS_Hatch;
+import frc.robot.subsystems.SS_Intake;
 import frc.robot.subsystems.SS_Shooter;
 
 /**
@@ -24,6 +25,7 @@ public class Robot extends TimedRobot {
   private static SS_Shooter ss_shooter;
   private static SS_AmmoClip ss_clip;
   private static SS_Hatch ss_hatch;
+  private static SS_Intake ss_intake;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -33,6 +35,7 @@ public class Robot extends TimedRobot {
     ss_shooter = new SS_Shooter();
     ss_clip = new SS_AmmoClip();
     ss_hatch = new SS_Hatch();
+    ss_intake = new SS_Intake();
   }
 
   public static SS_Shooter getShooter(){
@@ -40,6 +43,9 @@ public class Robot extends TimedRobot {
   }
   public static SS_AmmoClip getAmmoClip(){
     return ss_clip;
+  }
+  public static SS_Intake getIntake(){
+    return ss_intake;
   }
   public static SS_Hatch getHatch(){
     return ss_hatch;

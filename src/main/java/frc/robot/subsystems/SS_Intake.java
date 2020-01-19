@@ -7,29 +7,22 @@
 
 package frc.robot.subsystems;
 
-
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
-public class SS_Shooter extends SubsystemBase {
-  private CANSparkMax shooter;
-  private final double GEAR_RATIO = 1;
-  public SS_Shooter() {
-    shooter = new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
+public class SS_Intake extends SubsystemBase {
+  /**
+   * Creates a new SS_Intake.
+   */
+  private CANSparkMax intake;
+  public SS_Intake() {
+    intake = new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
   }
-
   public void setSpeed(double speed){
-    shooter.set(speed);
-  }
-  public void setRPM(double rpm){
-    shooter.getPIDController().setReference(rpm * GEAR_RATIO, ControlType.kVelocity);
-  }
-  public double getRPM(){
-    return shooter.getEncoder().getVelocity() * GEAR_RATIO;
+    intake.set(speed);
   }
   @Override
   public void periodic() {
